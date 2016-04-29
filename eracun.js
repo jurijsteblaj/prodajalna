@@ -211,11 +211,41 @@ streznik.post('/prijava', function(zahteva, odgovor) {
       //TODO: add fields and finalize
       //stmt.run("", "", "", "", "", "", "", "", "", "", "", 3); 
       //stmt.finalize();
+      stmt.run(polja.FirstName,
+        polja.LastName,
+        polja.Company,
+        polja.Address,
+        polja.City,
+        polja.State,
+        polja.Country,
+        polja.PostalCode,
+        polja.Phone,
+        polja.Fax,
+        polja.Email,
+        3);
+      stmt.finalize();
+      
+      
     } catch (err) {
       napaka2 = true;
     }
   
-    odgovor.end();
+    var sporocilo;
+    if (napaka1 || napaka2) {
+      sporocilo = "Prišlo je do napake pri registraciji nove stranke. Prosim preverite vnešene podatke in poskusite znova.";
+    }
+    else {
+      sporocilo = "Stranka je bila uspešno registrirana.";
+    }
+    
+    vrniStranke(function(napaka3, stranke) {
+      vrniRacune(function(napaka4, racuni) {
+        if (napaka3 || napaka4) {
+          sporocilo = "Prišlo je do napake pri registraciji nove stranke. Prosim preverite vnešene podatke in poskusite znova.";
+        }
+        odgovor.render('prijava', {sporocilo: sporocilo, seznamStrank: stranke, seznamRacunov: racuni});  
+      }) 
+    });
   });
 })
 
