@@ -309,13 +309,8 @@ streznik.post('/stranka', function(zahteva, odgovor) {
 
 // Odjava stranke
 streznik.post('/odjava', function(zahteva, odgovor) {
-<<<<<<< HEAD
-    zahteva.session.customerId = undefined;
-    odgovor.redirect('/prijava') 
-=======
   zahteva.session.customerId = undefined;
-  odgovor.redirect('/prijava') 
->>>>>>> prikaz-racuna-trenutni
+  odgovor.redirect('/prijava');
 })
 
 
